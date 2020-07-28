@@ -169,11 +169,15 @@ public class CluedoGame {
     }
 
     public void suggestion(Player player, String room){
-
+        System.out.println("Pick a card from Character and Weapon types to make a suggestion");
+        ArrayList<String> murder = ui.getMurder(true);
+        System.out.println("You suggestion is; Room: "+room+ "  Character: "+murder.get(0)+"  Weapon: "+murder.get(1));
     }
 
     public void accusation(Player player){
-
+        System.out.println("Pick a card from each type to make a accusation");
+        ArrayList<String> murder = ui.getMurder(false);
+        System.out.println("You accusation is; Room: "+murder.get(0)+ "  Character: "+murder.get(1)+"  Weapon: "+murder.get(2));
     }
 
     public static void main(String[] args) {
