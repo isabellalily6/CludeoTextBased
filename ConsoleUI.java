@@ -65,8 +65,14 @@ public class ConsoleUI {
             // asks user for room
             System.out.println("Pick a room card: ");
             String roomInput = input.next();
-            // error check here
             room = roomNames.get(roomInput);
+            // error check here
+            while(room == null){
+                invalidInput();
+                System.out.println("Pick a room card: ");
+                roomInput = input.next();
+                room = roomNames.get(roomInput);
+            }
             murder.add(room);
         }
 
@@ -77,9 +83,14 @@ public class ConsoleUI {
         // asks user for character
         System.out.println("Pick a character card: ");
         String charInput = input.next();
-        // error check here
         character = characterNames.get(charInput);
-        System.out.println(character);
+        // error check here
+        while(character == null){
+            invalidInput();
+            System.out.println("Pick a character card: ");
+            charInput = input.next();
+            character = characterNames.get(charInput);
+        }
         murder.add(character);
 
         //prints out all weapon options
@@ -88,9 +99,15 @@ public class ConsoleUI {
         }
         // asks user for weapon
         System.out.println("Pick a weapon card: ");
-        String weaponInput = input.next();
-        // error check here
+        String weaponInput = input.next()
         weapon = weaponNames.get(weaponInput);
+        // error check here
+        while(weapon == null){
+            invalidInput();
+            System.out.println("Pick a weapon card: ");
+            weaponInput = input.next();
+            weapon = weaponNames.get(weaponInput);
+        }
         murder.add(weapon);
 
         return murder;
