@@ -152,10 +152,15 @@ public class ConsoleUI {
     public Boolean seeYourHand(){
         System.out.println("Do you want to view your hand? Y or N: ");
         String userInput = input.next();
-        if(userInput.equals("Y")){
+        if(userInput.equalsIgnoreCase("Y")){
             return true;
+        } else if (userInput.equalsIgnoreCase("N")) {
+            return false;
+        } else {    //error checking
+            invalidInput();
+            seeYourHand();
         }
-        return false;
+        return true;
     }
 
     public void viewHand(ArrayList<Card> hand){
@@ -170,20 +175,28 @@ public class ConsoleUI {
         System.out.println("Do you want to make an Accusation? ");
         System.out.println("Enter Y or N");
         String userInput = input.next();
-        if(userInput.toUpperCase().equals("Y")){
+        if(userInput.equalsIgnoreCase("Y")){
             return true;
+        }else if(userInput.equalsIgnoreCase("N")){
+            return false;
+        } else {    // error checking
+            shouldMakeAccusation();
         }
-        return false;
+        return true;
     }
 
     public boolean continueMove(){
         System.out.println("You are in a room!!!");
         System.out.println("Do you want to use the rest of your moves? Y or N");
         String userInput = input.next();
-        if(userInput.toUpperCase().equals("Y")){
+        if(userInput.equalsIgnoreCase("Y")){
             return true;
+        } else if(userInput.equalsIgnoreCase("N")){
+            return false;
+        } else {    // error checking
+            continueMove();
         }
-        return false;
+        return true;
     }
 
     public void displayCard(Player withCard, Card toShow) {
@@ -196,6 +209,13 @@ public class ConsoleUI {
         System.out.print("Number: ");
         String choose = input.next();
         int chosen = Integer.parseInt(choose) -1;
+        // error checking
+        while(chosen < 0 || chosen >= chooseFrom.size()){
+            invalidInput();
+            System.out.print("Number: ");
+            choose = input.next();
+            chosen = Integer.parseInt(choose) -1;
+        }
         System.out.println("\nPlayer " + choosing.getSymbol() + " showed you " + chooseFrom.get(chosen).getName() + ".");
     }
 
