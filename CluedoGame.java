@@ -20,6 +20,11 @@ public class CluedoGame {
 
     public void run() {
         numPlayers = ui.getNumPlayers();
+        // error checking range
+        while(numPlayers < 3 || numPlayers > 6){
+            ui.invalidInput();
+            numPlayers = ui.getNumPlayers();
+        }
 
         makePlayers();
 
@@ -94,6 +99,11 @@ public class CluedoGame {
         }
         if(roomNames.containsKey(board.getCell(player.getxPos(), player.getyPos()).getSymbol())){
             String userInput = ui.checkSuggestion();
+            // error checking
+            while(!validSuggestion(userInput)){
+                ui.invalidInput();
+                userInput = ui.checkSuggestion();
+            }
             if(userInput.equals("S")){
                 suggestion(player, roomNames.get(board.getCell(player.getxPos(), player.getyPos()).getSymbol()));
                 // ask if want to make accusation or not
@@ -106,6 +116,14 @@ public class CluedoGame {
         }
         ui.drawWeapons(roomWeapons);
         board.drawBoard(players);
+    }
+    
+    // used for error checking
+    public boolean validSuggestion(String input){
+        if(input.equalsIgnoreCase("S") || input.equalsIgnoreCase("A") || input.equalsIgnoreCase("N")){
+            return true;
+        }
+        return false;
     }
 
     public void gameOver(Player winningPlayer){
