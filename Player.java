@@ -48,28 +48,28 @@ public class Player {
     }
 
     public Boolean move(String move, Cell[][] playerBoard){
-        if(move.equals("U")){
+        if(move.equalsIgnoreCase("U")){
             if(yPos != 0){
                 if(!board.getCell(xPos, yPos-1).isWall() && !playerNums.contains(playerBoard[xPos][yPos-1].getSymbol())){
                     yPos -= 1;
                     return true;
                 }
             }
-        }else if(move.equals("D")){
+        }else if(move.equalsIgnoreCase("D")){
             if(yPos != 24){
                 if(!board.getCell(xPos, yPos+1).isWall() && !playerNums.contains(playerBoard[xPos][yPos+1].getSymbol())){
                     yPos += 1;
                     return true;
                 }
             }
-        }else if(move.equals("L")){
+        }else if(move.equalsIgnoreCase("L")){
             if(xPos != 0){
                 if(!board.getCell(xPos-1, yPos).isWall() && !playerNums.contains(playerBoard[xPos-1][yPos].getSymbol())){
                     xPos -= 1;
                     return true;
                 }
             }
-        }else if(move.equals("R")){
+        }else if(move.equalsIgnoreCase("R")){
             if(xPos != 23){
                 if(!board.getCell(xPos+1, yPos).isWall() && !playerNums.contains(playerBoard[xPos+1][yPos].getSymbol())){
                     xPos += 1;
