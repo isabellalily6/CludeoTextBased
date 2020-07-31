@@ -47,35 +47,25 @@ public class Player {
         return hand;
     }
 
-    public Boolean move(String move, Cell[][] playerBoard){
+    public Boolean move(String move, Cell[][] playerBoard, Set<Cell> spacesUsed){
+        int tempX = xPos;
+        int tempY = yPos;
         if(move.equalsIgnoreCase("U")){
-            if(yPos != 0){
-                if(!board.getCell(xPos, yPos-1).isWall() && !playerNums.contains(playerBoard[xPos][yPos-1].getSymbol())){
-                    yPos -= 1;
-                    return true;
-                }
-            }
+            tempY -= 1;
         }else if(move.equalsIgnoreCase("D")){
-            if(yPos != 24){
-                if(!board.getCell(xPos, yPos+1).isWall() && !playerNums.contains(playerBoard[xPos][yPos+1].getSymbol())){
-                    yPos += 1;
-                    return true;
-                }
-            }
+            tempY += 1;
         }else if(move.equalsIgnoreCase("L")){
-            if(xPos != 0){
-                if(!board.getCell(xPos-1, yPos).isWall() && !playerNums.contains(playerBoard[xPos-1][yPos].getSymbol())){
-                    xPos -= 1;
-                    return true;
-                }
-            }
+            tempX -= 1;
         }else if(move.equalsIgnoreCase("R")){
-            if(xPos != 23){
-                if(!board.getCell(xPos+1, yPos).isWall() && !playerNums.contains(playerBoard[xPos+1][yPos].getSymbol())){
-                    xPos += 1;
-                    return true;
-                }
-            }
+            tempX += 1;
+        }else{
+            return false;
+        }
+        if((!playerBoard[tempX][tempY].isWall() && !playerNums.contains(playerBoard[tempX][tempY].getSymbol()) &&
+                (tempX <= 23 && tempX >= 0) && (tempY >= 0 && tempY<=24) && !spacesUsed.contains(playerBoard[tempX][tempY]))){
+            xPos = tempX;
+            yPos = tempY;
+            return true;
         }
         return false;
     }
