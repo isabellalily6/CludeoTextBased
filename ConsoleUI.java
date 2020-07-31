@@ -99,7 +99,7 @@ public class ConsoleUI {
         }
         // asks user for weapon
         System.out.println("Pick a weapon card: ");
-        String weaponInput = input.next()
+        String weaponInput = input.next();
         weapon = weaponNames.get(weaponInput);
         // error check here
         while(weapon == null){
