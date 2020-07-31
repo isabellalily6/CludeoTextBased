@@ -72,12 +72,14 @@ public class CluedoGame {
 
     public void playersTurn(Player player) {
         boolean asked = false;
+        Set<Cell> spacesUsed = new HashSet<Cell>();
         if(ui.seeYourHand()){
             ui.viewHand(player.getHand());
         }
         int diceNum = rollDice();
         ui.displayDiceRoll(diceNum);
         while(diceNum > 0){
+            spacesUsed.add(board.getCell(player.getxPos(), player.getyPos()));
             if(roomNames.containsKey(board.getCell(player.getxPos(), player.getyPos()).getSymbol()) && !asked){
                 // player is in a room
                 asked = true;
