@@ -89,10 +89,10 @@ public class CluedoGame {
             }
             if(diceNum > 0) {
                 ui.displayMovesLeft(diceNum);
-                Boolean validMove = player.move(ui.getMoves(), board.getPlayerBoard(players));
+                Boolean validMove = player.move(ui.getMoves(), board.getPlayerBoard(players), spacesUsed);
                 while (!validMove) {
                     ui.invalidInput();
-                    validMove = player.move(ui.getMoves(), board.getPlayerBoard(players));
+                    validMove = player.move(ui.getMoves(), board.getPlayerBoard(players), spacesUsed);
                 }
                 ui.drawWeapons(roomWeapons);
                 board.drawBoard(players);
