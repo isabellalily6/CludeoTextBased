@@ -14,14 +14,12 @@ public class ConsoleUI {
 
     public int getNumPlayers() {
         System.out.print("Enter the number of players to play (between 3-6): ");
-        // Error check
         int number =  Integer.parseInt(input.nextLine());
         return number;
     }
 
     public String getMoves(){
         System.out.println("Do you want to move UDLR? ");
-        // Error Check!!!
         String move = input.next();
         return move;
     }
@@ -46,7 +44,6 @@ public class ConsoleUI {
         System.out.println("Do you want to make a suggestion (S), an Accusation (A) or neither (N)? ");
         System.out.println("Type S for suggestion, A for accusation and N for neither");
         String userInput = input.next();
-        // error check here!!!
         return userInput;
     }
 
@@ -148,6 +145,7 @@ public class ConsoleUI {
         return murder;
     }
 
+    
     public Suggestion makeAccusation(){
         System.out.println("Pick a card from each type to make a accusation");
         ArrayList<String> murder = getMurder(false);
@@ -155,7 +153,7 @@ public class ConsoleUI {
         Character sugChar = new Character(murder.get(1));
         Weapon sugWeapon = new Weapon(murder.get(2));
         Suggestion sug = new Suggestion(sugChar, sugRoom, sugWeapon);
-        System.out.println("You accusation is; Room: "+sug.getRoom().getName()+ "  Character: "+sug.getCharacter().getName()+"  Weapon: "+sug.getWeapon().getName());
+        System.out.println("Your accusation is; Room: "+sug.getRoom().getName()+ "  Character: "+sug.getCharacter().getName()+"  Weapon: "+sug.getWeapon().getName());
         return sug;
     }
 
@@ -173,7 +171,8 @@ public class ConsoleUI {
             return true;
         } else if (userInput.equalsIgnoreCase("N")) {
             return false;
-        } else {    //error checking
+        } else {    
+            //error checking
             invalidInput();
             seeYourHand();
         }
@@ -196,7 +195,8 @@ public class ConsoleUI {
             return true;
         }else if(userInput.equalsIgnoreCase("N")){
             return false;
-        } else {    // error checking
+        } else {    
+            // error checking
             shouldMakeAccusation();
         }
         return true;
@@ -210,7 +210,8 @@ public class ConsoleUI {
             return true;
         } else if(userInput.equalsIgnoreCase("N")){
             return false;
-        } else {    // error checking
+        } else {    
+            // error checking
             continueMove();
         }
         return true;
@@ -227,7 +228,7 @@ public class ConsoleUI {
         String choose = input.next();
         int chosen = Integer.parseInt(choose) -1;
         // error checking
-        while(chosen < 0 || chosen >= chooseFrom.size()){
+        while(chosen < 0 || chosen >= chooseFrom.size()){   // if out of bounds
             invalidInput();
             System.out.print("Number: ");
             choose = input.next();
