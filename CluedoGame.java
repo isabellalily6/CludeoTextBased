@@ -18,6 +18,11 @@ public class CluedoGame {
         board = new Board();
     }
 
+    /**
+     * Uses methods below to create everything needed to play the game (Cards, players etc)
+     * then starts running/playing the game. Will continuously loop through the while loop
+     * until game finishes.
+     */
     public void run() {
         numPlayers = ui.getNumPlayers();
         // error checking range
@@ -50,7 +55,7 @@ public class CluedoGame {
         board.drawBoard(players);
 
         Player winningPlayer = null;
-        while(!gameOver) {
+        while(!gameOver) {  // loops through stages 2-4 from section 2.6 'User Interface' from handout
             for (Player player : currentPlayers) {
                 if(!player.getHasLost()){
                     ui.displayPlayersTurn(player.getSymbol());
@@ -70,26 +75,34 @@ public class CluedoGame {
 
     }
 
+    /**
+     * Runs through a players turn including; dice roll, moves, suggestion etc
+     * Will be used every time it's a new players turn
+     * 
+     * @param player
+     */
     public void playersTurn(Player player) {
         boolean asked = false;
         Set<Cell> spacesUsed = new HashSet<Cell>();
-        if(ui.seeYourHand()){
+        if(ui.seeYourHand()){   // will print out your hand if true
             ui.viewHand(player.getHand());
         }
         int diceNum = rollDice();
         ui.displayDiceRoll(diceNum);
-        while(diceNum > 0){
+        while(diceNum > 0){     //continue until no more moves left
             spacesUsed.add(board.getCell(player.getxPos(), player.getyPos()));
             if(roomNames.containsKey(board.getCell(player.getxPos(), player.getyPos()).getSymbol()) && !asked){
                 // player is in a room
                 asked = true;
                 if(!ui.continueMove()){
+                    //player doesn't want to use the rest of their move.
                     diceNum = 0;
                 }
             }
             if(diceNum > 0) {
                 ui.displayMovesLeft(diceNum);
                 Boolean validMove = player.move(ui.getMoves(), board.getPlayerBoard(players), spacesUsed);
+                // error checking
                 while (!validMove) {
                     ui.invalidInput();
                     validMove = player.move(ui.getMoves(), board.getPlayerBoard(players), spacesUsed);
@@ -99,6 +112,7 @@ public class CluedoGame {
                 diceNum -= 1;
             }
         }
+         // if they are inside when they have no more moves they can make a suggestion
         if(roomNames.containsKey(board.getCell(player.getxPos(), player.getyPos()).getSymbol())){
             String userInput = ui.checkSuggestion();
             // error checking
@@ -120,7 +134,9 @@ public class CluedoGame {
         board.drawBoard(players);
     }
     
-    // used for error checking
+    /**
+     * used for error checking
+     */
     public boolean validSuggestion(String input){
         if(input.equalsIgnoreCase("S") || input.equalsIgnoreCase("A") || input.equalsIgnoreCase("N")){
             return true;
@@ -166,7 +182,9 @@ public class CluedoGame {
         cards.add(new Room("Dining Room"));
     }
 
-
+    /**
+     * Add a weapon into a room, there can be no two weapon in the same room
+     */
     public void addWeaponsToRooms(){
         ArrayList<Weapon> weapons = new ArrayList<>();
         for(Card card: cards){
@@ -186,6 +204,9 @@ public class CluedoGame {
         }
     }
 
+    /**
+     * Create rooms for displaying on the board, the key will be used to display
+     */
     public void createRooms(){
         roomNames.put('D', "Dining Room");
         roomNames.put('K', "Kitchen");
@@ -198,6 +219,10 @@ public class CluedoGame {
         roomNames.put('O', "Lounge");
     }
 
+    /**
+     * Create player for displaying on the board, the symbol will be used to display
+     * each player is a character
+     */
     public void makePlayers(){
         players.add(new Player(new Character("Miss Scarlett"), 7, 24, '1', board));
         players.add(new Player(new Character("Colonel Mustard"), 0, 17, '2', board));
@@ -207,10 +232,15 @@ public class CluedoGame {
         players.add(new Player(new Character("Professor Plum"), 23, 19, '6', board));
     }
 
+    /**
+     * Creates a Suggestion object that contains the answer to the game created
+     * once per game
+     */
     public void decideMurder(){
         Iterator<Card> index = cards.iterator();
         Card chosenCard = index.next();
 
+        // searches for a weapon card and removes it from the stack of cards
         while(!(chosenCard instanceof Weapon)){
             chosenCard = index.next();
         }
@@ -218,6 +248,7 @@ public class CluedoGame {
         cards.remove(weapon);
 
         index = cards.iterator();
+        // searches for a room card and removes it from the stack of cards
         while(!(chosenCard instanceof Room)){
             chosenCard = index.next();
         }
@@ -225,6 +256,7 @@ public class CluedoGame {
         cards.remove(room);
 
         index = cards.iterator();
+        // searches for a character card and removes it from the stack of cards
         while(!(chosenCard instanceof Character)){
             chosenCard = index.next();
         }
@@ -238,6 +270,10 @@ public class CluedoGame {
         return (int) ((Math.random() * 5 + 1) + (Math.random() * 5 + 1));
     }
 
+    /**
+     * Evenly hands out the rest of the cards into the players hands. If odd amount 
+     * some players will have one more card.
+     */
     public void dealCards() {
         Iterator<Card> index = cards.iterator();
 
@@ -252,20 +288,29 @@ public class CluedoGame {
         cards.clear();
     }
 
+    /**
+     * If weapon from a different room is used in a suggestion then move it to the room that
+     * the suggestion was made in, and if that room already has a weapon in it then swap rooms
+     * with the weapon
+     * 
+     * @param room
+     * @param weapon
+     */
     public void moveWeapon(String room, String weapon){
-        String oldRoom = null;
+        String oldRoom = null; // name of room weapon needed is in currently
         for (Map.Entry<String,String> entry : roomWeapons.entrySet()){
             if(entry.getValue().equals(weapon)){
                 oldRoom = entry.getKey();
             }
         }
         if(roomWeapons.containsKey(room)){
+            // swaps room
             roomWeapons.put(oldRoom, roomWeapons.get(room));
-            roomWeapons.put(room, weapon);
         }else{
+            //if no weapon is in room
             roomWeapons.remove(oldRoom);
-            roomWeapons.put(room, weapon);
         }
+        roomWeapons.put(room, weapon);
     }
 
     public void movePlayer(String room, String player){
@@ -300,11 +345,12 @@ public class CluedoGame {
 
         boolean shownCard = false;
         int num = 0;
-        if((player.getSymbol()-'0') == numPlayers){
+        if((player.getSymbol()-'0') == numPlayers){ // if last player go back to the beginning
             num = 0;
         }else{
             num = player.getSymbol() - '0';
         }
+        // loop clockwise around other players and check their hands for any cards in suggestion
         for(int i = num; i != (int) (player.getSymbol()-'0')-1; i++) {
             if(i == numPlayers){
                 i = 0;
@@ -316,7 +362,7 @@ public class CluedoGame {
                 ui.displayCard(p, matches.get(0));
                 shownCard = true;
                 break;
-            } else if(matches.size() > 1) {
+            } else if(matches.size() > 1) { // make the user choose which card to show to the current player
                 ui.chooseCard(p, matches);
                 shownCard = true;
                 break;
