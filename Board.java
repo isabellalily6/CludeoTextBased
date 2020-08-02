@@ -23,6 +23,12 @@ public class Board {
         System.out.println();
     }
 
+    /**
+     * Adds all players the player on the board in their current position
+     *
+     * @param players
+     * @return
+     */
     public Cell[][] getPlayerBoard(ArrayList<Player> players){
         Cell[][] tempBoard = new Cell[WIDTH][HEIGHT];
         for(int y = 0; y < HEIGHT; y++) {
@@ -41,6 +47,13 @@ public class Board {
         return board[x][y];
     }
 
+    /**
+     * Makes and return a list of the room positions
+     *
+     * @param letter
+     * @param players
+     * @return
+     */
     public List<Integer> getRoom(char letter, ArrayList<Player> players){
         Cell[][] tempBoard = getPlayerBoard(players);
         for(int y = 0; y < HEIGHT; y++) {
