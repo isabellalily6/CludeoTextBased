@@ -25,6 +25,12 @@ public class Player {
         return hasLost;
     }
 
+    /**
+     * Checks hand to see if this player has any cards from suggestion
+     *
+     * @param toCheck
+     * @return
+     */
     public ArrayList<Card> checkHand(ArrayList<String> toCheck) {
         ArrayList<Card> matches = new ArrayList<Card>();
         for(Card c : hand) {
@@ -47,6 +53,17 @@ public class Player {
         return hand;
     }
 
+    /**
+     * Makes sure that the move is valid by first making sure the string is one of the four
+     * valid inputs and then by making sure that they can move in that direction; not a wall,
+     * not another player, not a space they have already used, and that they are not going
+     * out of bounds
+     *
+     * @param move
+     * @param playerBoard
+     * @param spacesUsed
+     * @return
+     */
     public Boolean move(String move, Cell[][] playerBoard, Set<Cell> spacesUsed){
         int tempX = xPos;
         int tempY = yPos;
