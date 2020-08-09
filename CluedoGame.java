@@ -118,13 +118,13 @@ public class CluedoGame {
                 ui.invalidInput();
                 userInput = ui.checkSuggestion();
             }
-            if(userInput.equals("S")){
+            if(userInput.equalsIgnoreCase("S")){
                 suggestion(player, roomNames.get(board.getCell(player.getxPos(), player.getyPos()).getSymbol()));
                 // ask if want to make accusation or not
                 if(ui.shouldMakeAccusation()){
                     userInput = "A";
                 }
-            }if(userInput.equals("A")){
+            }if(userInput.equalsIgnoreCase("A")){
                 accusation(player);
             }
         }
