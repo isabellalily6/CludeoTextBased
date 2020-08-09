@@ -1,7 +1,9 @@
+// A Cell is a single position on the board.
+
 public class Cell {
     private int xCoord;
     private int yCoord;
-    private char symbol;
+    private char symbol; //Represents what the cell is (wall, room, etc.)
 
     public Cell(int x, int y, char symbol){
         xCoord = x;

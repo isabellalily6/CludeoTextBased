@@ -1,3 +1,5 @@
+// Class for the 6 character cards
+
 public class Character extends Card {
     private String name;
 

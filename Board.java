@@ -1,21 +1,28 @@
+// The board is a 2D Array of cells. The game board that holds and displays information about everything on the board. 
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class Board {
     private int WIDTH = 24;
     private int HEIGHT = 25;
-    private Cell[][] board = new Cell[WIDTH][HEIGHT];
+    private Cell[][] board = new Cell[WIDTH][HEIGHT]; // storing each cell in position
 
     public Board(){
         makeBoard();
     }
 
+    /**
+     * Display the board
+     *
+     * @param players
+     */
     public void drawBoard(ArrayList<Player> players) {
         Cell[][] tempBoard = getPlayerBoard(players);
         for(int y = 0; y < HEIGHT; y++) {
             System.out.println();
             for (int x = 0; x < WIDTH; x++) {
+            	//print the symbol indicating what is in the cell with a space in between
                 System.out.print(tempBoard[x][y].getSymbol());
                 System.out.print(" ");
             }
@@ -27,15 +34,18 @@ public class Board {
      * Adds all players the player on the board in their current position
      *
      * @param players
-     * @return
+     * @return 2D array of cells including where the players are
      */
     public Cell[][] getPlayerBoard(ArrayList<Player> players){
+    	//store the current board in a new 2D array
         Cell[][] tempBoard = new Cell[WIDTH][HEIGHT];
         for(int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 tempBoard[x][y] = board[x][y];
             }
         }
+        
+        //add the players to the new board
         for(Player player: players){
             Cell c = new Cell(player.getxPos(), player.getyPos(), player.getSymbol());
             tempBoard[player.getxPos()][player.getyPos()] = c;
@@ -48,11 +58,11 @@ public class Board {
     }
 
     /**
-     * Makes and return a list of the room positions
+     * Returns the top left position in a room
      *
-     * @param letter
+     * @param letter indicating the room
      * @param players
-     * @return
+     * @return x and y value of top left cell in the relevant room
      */
     public List<Integer> getRoom(char letter, ArrayList<Player> players){
         Cell[][] tempBoard = getPlayerBoard(players);
@@ -69,6 +79,10 @@ public class Board {
         return null;
     }
 
+    /**
+     * Design and store the board layout
+     *
+     */
     public void makeBoard(){
         String boardLayout =
                 "XXXXXXXXXXXXXXXXXXXXXXXX" +

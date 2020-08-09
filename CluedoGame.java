@@ -1,9 +1,11 @@
+// This class oversees the entire game. It contains the main methods in the game like run() and playersTurn().
+
 import java.util.*;
 
 public class CluedoGame {
     private int numPlayers;
     private Set<Card> cards = new HashSet<>();
-    private Suggestion murder;
+    private Suggestion murder; //solution
     private java.util.ArrayList<Player> players = new ArrayList<>();
     private java.util.ArrayList<Player> currentPlayers = new ArrayList<>();
     private Map<String, String> roomWeapons = new HashMap<>();
@@ -133,7 +135,9 @@ public class CluedoGame {
     }
     
     /**
-     * used for error checking
+     * Check if the player entered a valid input when asked about making a suggestion or accusation
+     * 
+     * @return true if valid, otherwise false
      */
     public boolean validSuggestion(String input){
         if(input.equalsIgnoreCase("S") || input.equalsIgnoreCase("A") || input.equalsIgnoreCase("N")){
@@ -157,7 +161,6 @@ public class CluedoGame {
 
     /**
      * Create the character, weapon and room cards
-     *
      */
     public void createCards(){
         //create all the cards and add to list

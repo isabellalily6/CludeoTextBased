@@ -1,3 +1,5 @@
+// Class for the 9 room cards
+
 public class Room extends Card {
     private String name;
 
@@ -8,14 +10,5 @@ public class Room extends Card {
     public String getName() {
         return name;
     }
-
-    @Override
-    public boolean equals(Object object){
-        if(object instanceof Room){
-            if(((Room)object).getName().equals(name)){
-                return true;
-            }
-        }
-        return false;
-    }
+    
 }
