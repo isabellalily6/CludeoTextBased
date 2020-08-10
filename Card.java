@@ -3,20 +3,25 @@
 public class Card {
     private String name;
 
+    /**
+     * Gets the name of the card
+     *
+     * @return the name of the card
+     */
     public String getName() {
         return name;
     }
-    
+
     /**
      * Compares the name of each card to check if they are the same
      *
-     * @param object 
+     * @param object
      * @return true if they are the the same, false if they aren't
      */
-    public boolean equals(Object object){
-        if(object instanceof Card){
+    public boolean equals(Object object) {
+        if (object instanceof Card) {
             Card card = (Card) object;
-            if(card.getName().equals(this.name)){
+            if (card.getName().equals(this.name)) {
                 return true;
             }
         }
